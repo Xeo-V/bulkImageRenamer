@@ -8,7 +8,7 @@ def rename_images_in_folder():
     if not os.path.exists(folder_path):
         print("The specified folder does not exist.")
         return
-    
+     
     # Ask the user for the prefix string to use for renaming
     prefix = input("Enter the prefix string for renaming the files: ")
     
