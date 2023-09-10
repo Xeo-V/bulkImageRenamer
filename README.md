@@ -1,49 +1,67 @@
-# bulkImageRenamer
-Bulk Image Renamer  This Python script automatically renames all image files in a specified folder with a user-defined prefix and sequential numbering (e.g., "Prefix_001.jpg").
------------------------------------------------------------------------------------------------------------------------------
 
-Description
+# Advanced Image Renamer
 
-The Bulk Image Renamer is a Python script designed to automatically rename all image files in a specified directory. Files are renamed according to a user-defined prefix and are sequentially numbered (e.g., "Prefix_001.jpg").
-Use Cases
+Advanced Image Renamer is a Python script designed to offer a comprehensive solution for batch renaming image files in specified directories. With features like multi-language support, regular expression matching, and configuration file support, it provides a user-friendly yet powerful tool for file management tasks.
 
-    Photography: Renaming batches of photos from a shoot for easier organization.
-    Game Development: Renaming asset files for integration into game engines.
-    Machine Learning: Renaming image datasets for easier parsing and analysis.
-    General File Management: Any situation where uniform file naming is needed.
------------------------------------------------------------------------------------------------------------------------------
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Changelog](#changelog)
+- [Future Scope](#future-scope)
+- [Project Status](#project-status)
 
-How to Use
+## Features
+- **Batch Renaming**: Rename multiple files in one go.
+- **User-Friendly**: Interactive prompts guide the user through the renaming process.
+- **Multi-Language Support**: Supports multiple languages including English, Spanish, Chinese, Russian, German, and French.
+- **Regular Expression Support**: Advanced renaming using regular expressions.
+- **Configuration File Support**: Semi-automated renaming using a configuration file.
+- **Preview & Confirmation**: Preview the new filenames and confirm before proceeding.
+- **Undo Feature**: Generate an undo file to revert changes.
 
-    Clone this repository or download the Python script.
-    Open a terminal and navigate to the folder where the script is located.
-    Run the script by executing python rename_images.py (Python 3.x is required).
-    When prompted, enter the full path of the folder containing the images you wish to rename.
-    Enter the prefix string that you want to use for renaming the files.
+## Tech Stack
+- Python
+- JSON (for localization)
+- ConfigParser (for configuration file support)
 
-Example:
+## Installation
+Clone the repository to your local machine:
+\```bash
+git clone https://github.com/your_username/Advanced-Image-Renamer.git
+\```
 
-Enter the folder path where the images are stored: /path/to/image/folder
-Enter the prefix string for renaming the files: MyPrefix_
------------------------------------------------------------------------------------------------------------------------------
+## Usage
+1. Navigate to the project directory.
+2. Run the script:
+    \```bash
+    python imagerenamer.py
+    \```
+3. Follow the interactive prompts.
 
-Requirements
+## Changelog
+### New Features
+- **Multi-Language Support**: Allows users to select their preferred language for interaction.
+- **Batch Processing**: Enables renaming files across multiple folders.
+- **Undo Feature**: Provides an undo mechanism to revert changes.
 
-    Python 3.x
-    No external modules are needed; the script uses Python's built-in os library.
------------------------------------------------------------------------------------------------------------------------------
+### Optimizations
+- **Code Modularization**: Separated concerns into helper functions for better maintainability.
+- **Error Handling**: Improved error handling and logging.
 
-Features
+### UI/UX Improvements
+- **User Confirmation**: Added a confirmation step before renaming.
+- **File Preview**: Preview the renamed files before confirming.
 
-    Supports common image formats including .png, .jpg, .jpeg, .gif, .bmp, and .tiff.
-    Automatically numbers files starting from 001.
-    Skips non-image files in the directory.
------------------------------------------------------------------------------------------------------------------------------
+## Future Scope
+- Adding more advanced filters for file selection.
+- Implementing automated tests for reliability.
+- Extending support for more languages.
 
-Limitations
-
-    Currently supports only a limited set of image formats. You may extend this by modifying the code.
------------------------------------------------------------------------------------------------------------------------------
-License : 
-
-This project is open-source and available under the MIT License.
+## Project Status
+The project is currently fully functional and feature-rich. 
+### Progress :
+```
+[==============100%==============]
+```
