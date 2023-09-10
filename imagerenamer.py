@@ -5,12 +5,15 @@ import re
 import configparser
 
 def load_localization(language_code):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    localization_file = os.path.join(script_dir, f'localization/{language_code}.json')
     try:
-        with open(f'localization/{language_code}.json', 'r', encoding='utf-8') as f:
+        with open(localization_file, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
         logging.error(f"Localization file for {language_code} not found. Falling back to English.")
-        with open('localization/en.json', 'r', encoding='utf-8') as f:
+        english_file = os.path.join(script_dir, 'localization/en.json')
+        with open(english_file, 'r', encoding='utf-8') as f:
             return json.load(f)
 
 def get_user_input(prompt):
