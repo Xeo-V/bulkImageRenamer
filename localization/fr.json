@@ -1,0 +1,6 @@
+{
+    "folder_prompt": "Entrez les chemins des dossiers où les images sont stockées (séparés par des virgules):",
+    "prefix_prompt": "Entrez la chaîne de préfixe pour renommer les fichiers:",
+    "undo_saved": "Informations d'annulation enregistrées dans:"
+}
+
