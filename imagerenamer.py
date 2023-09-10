@@ -1,5 +1,15 @@
 import os
 import logging
+import json
+
+def load_localization(language_code):
+    try:
+        with open(f'localization/{language_code}.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logging.error(f"Localization file for {language_code} not found. Falling back to English.")
+        with open('localization/en.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
 
 def get_user_input(prompt):
     return input(prompt)
@@ -7,69 +17,55 @@ def get_user_input(prompt):
 def validate_folder(folder_path):
     return os.path.exists(folder_path)
 
-def filter_image_files(all_files, case_sensitive):
-    extensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff']
-    if case_sensitive:
-        return [f for f in all_files if any(f.endswith(ext) for ext in extensions)]
-    else:
-        return [f for f in all_files if any(f.lower().endswith(ext) for ext in extensions)]
+def filter_image_files(all_files):
+    return [f for f in all_files if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff'))]
 
-def rename_files(folder_path, prefix, image_files, skip_existing):
+def rename_files(folder_path, prefix, localization):
+    all_files = os.listdir(folder_path)
+    image_files = filter_image_files(all_files)
     total_files = len(image_files)
     counter = 1
+    undo_mapping = {}
+    
     for img in image_files:
-        # Progress Feedback
-        print(f"Progress: {counter}/{total_files} ({(counter / total_files) * 100:.2f}%)")
-        
         extension = os.path.splitext(img)[1]
         new_name = f"{prefix}{str(counter).zfill(3)}{extension}"
         old_path = os.path.join(folder_path, img)
         new_path = os.path.join(folder_path, new_name)
         
         if os.path.exists(new_path):
-            logging.warning(f"File {new_name} already exists.")
-            if skip_existing:
-                logging.info("Skipping.")
-                counter += 1
-                continue
-            else:
-                logging.info("Overwriting.")
-
-        try:
-            os.rename(old_path, new_path)
-            logging.info(f"Renamed {img} to {new_name}")
-        except PermissionError:
-            logging.error(f"Permission error: Could not rename {img} to {new_name}.")
-        except Exception as e:
-            logging.error(f"An error occurred while renaming {img} to {new_name}. Error: {e}")
+            logging.warning(f"File {new_name} already exists. Skipping.")
+            continue
+        
+        os.rename(old_path, new_path)
+        logging.info(f"Renamed {img} to {new_name}")
+        
+        undo_mapping[old_path] = new_path
         counter += 1
 
-def rename_images_in_folder():
+    undo_file_path = os.path.join(folder_path, "undo_mapping.json")
+    with open(undo_file_path, 'w') as f:
+        json.dump(undo_mapping, f)
+    logging.info(localization['undo_saved'] + undo_file_path)
+
+def rename_images_in_batch():
     logging.basicConfig(level=logging.INFO)
-
-    folder_path = get_user_input("Enter the folder path where the images are stored: ")
     
-    if not validate_folder(folder_path):
-        logging.error("The specified folder does not exist.")
-        return
+    # Load localization
+    language_code = get_user_input("Select language (en, es, etc.): ")
+    localization = load_localization(language_code)
+    
+    folder_paths_str = get_user_input(localization['folder_prompt'])
+    folder_paths = folder_paths_str.split(',')
 
-    prefix = get_user_input("Enter the prefix string for renaming the files: ")
-    case_sensitive = get_user_input("Consider file extensions case-sensitive? (yes/no): ") == 'yes'
-    skip_existing = get_user_input("Skip existing files? (yes/no): ") == 'yes'
+    for folder_path in folder_paths:
+        folder_path = folder_path.strip()
+        if not validate_folder(folder_path):
+            logging.error(f"The specified folder does not exist: {folder_path}")
+            continue
 
-    all_files = os.listdir(folder_path)
-    image_files = filter_image_files(all_files, case_sensitive)
+        prefix = get_user_input(localization['prefix_prompt'])
+        rename_files(folder_path, prefix, localization)
 
-    if len(image_files) == 0:
-        logging.warning("No image files found to rename.")
-        return
-
-    confirm = get_user_input(f"{len(image_files)} image files will be renamed. Do you want to continue? (yes/no): ")
-    if confirm.lower() != 'yes':
-        logging.info("Operation cancelled by the user.")
-        return
-
-    rename_files(folder_path, prefix, image_files, skip_existing)
-
-# Call the function to rename images
-rename_images_in_folder()
+# Call the function to rename images in batch
+rename_images_in_batch()
