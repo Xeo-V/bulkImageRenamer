@@ -1,0 +1,5 @@
+{
+    "folder_prompt": "Enter the folder paths where the images are stored (comma-separated): ",
+    "prefix_prompt": "Enter the prefix string for renaming the files: ",
+    "undo_saved": "Undo information saved to: "
+}
