@@ -1,0 +1,5 @@
+{
+    "folder_prompt": "Geben Sie die Ordnerpfade ein, in denen die Bilder gespeichert sind (durch Komma getrennt):",
+    "prefix_prompt": "Geben Sie die Präfixzeichenfolge zum Umbenennen der Dateien ein:",
+    "undo_saved": "Rückgängig-Informationen gespeichert unter:"
+}
