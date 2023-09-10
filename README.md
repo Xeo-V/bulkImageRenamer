@@ -28,6 +28,7 @@ Advanced Image Renamer is a Python script designed to offer a comprehensive solu
 
 ## Installation
 Clone the repository to your local machine:
+
 ```
 git clone https://github.com/your_username/Advanced-Image-Renamer.git
 ```
@@ -35,9 +36,11 @@ git clone https://github.com/your_username/Advanced-Image-Renamer.git
 ## Usage
 1. Navigate to the project directory.
 2. Run the script:
-    ```bash
+
+    ```
     python imagerenamer.py
     ```
+
 3. Follow the interactive prompts.
 
 ## Changelog
